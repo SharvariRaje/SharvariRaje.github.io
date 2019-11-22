@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>weight of wealth</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+		#changeSize {
+			font-size: 18px;
+		}
+		
+		#changeType {
+			font-weight: bold;
+			font-size:24px;
+		}
+		#colorChange {
+			font-color: gray;
+			font-size: 12px;
+		}
+        #graph {
+            margin: auto;
+            width: 600px;
+            border: 3pm solid black;
+        }
+
+        img:hover {
+            fill: gold;
+        }
+
+        #colorstrip {
+            width: 100%;
+            height: 2px;
+            border-style: solid;
+            border-color: white;
+            background-color: darksalmon;
+        }
+
+        #tooltip {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        #tooltip.hidden {
+            display: none;
+        }
+
+        #tooltip p {
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+	<span id="logo"><strong><font size = +18>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspjust how much is a B&nbspI&nbspL&nbspL&nbspI&nbspO&nbspN&nbsp?</font></strong></span>
+	<div id="colorstrip"></div>	
+	<br>
+	<br>
+	<p id=changeSize>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspWealth inequality in the US has reached critical levels.  Around 42 million Americans fell below the poverty line in 2018, according to the US census bureau.  Meanwhile, the world’s billionaires sit on massive<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspstores of wealth, hoarding resources that could be used to all our benefit.  Their wealth has the power to change lives, as well as our planet itself– UN scientists estimate that $300 billion could halt climate change<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspfor 20 years.  Jeff Bezos, Bill Gates, Warren Buffett, Larry Ellison, and Mark Zuckerberg could choose today to pause climate change until 2040, and even after doing so, they would each have $29 billion left over.<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspInstead, they buy luxury cars and homes, benefit from huge tax breaks, and sit on stores of wealth too massive to ever reasonably spend. 
+
+<br><br>
+
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspThe American myth of meritocracy forces us to believe that billionaires have earned their lifestyle through hard work and ingenuity.  In reality, it is far more likely that most of these men were simply in the right<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspplace at the right time.  In a nation that claims to provide equal opportunity for all, we must ask ourselves why we are willing to let families go hungry, live paycheck to paycheck, and sleep on the street in the<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspface of such excess.  </p>
+	<br><br>
+    <div id = "landing"></div>
+	<span id="logo"><strong><font size = +18>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsppick your billionaire</font></strong></span>
+	<div id="colorstrip"></div>
+    
+	<div id="chooseBilli"> </div>
+	<span id="logo"><strong><font size = +18>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsppick your variable</font></strong></span>
+	<div id="colorstrip"></div>
+    <div id="chooseVar"> </div>
+	<span id="logo"><strong><font size = +18>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsptry the scale</font></strong></span>
+	<div id="colorstrip"></div>
+	<br>
+	<p id=changeType>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspweight of wealth<p>
+		<p id=changeSize>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspClick on the plates of the scale to compare Jeff Bezos’ net worth with the cost of housing New York City’s homeless population for 1 year at a time.  Each weight added to the right side of the scale is one year<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp of housing for New York City’s 63,500 homeless individuals.  Can you balance the scale?</p>
+		<p id=colorChange>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspThis data is based on statistics from Coalition for the Homeless' website: using record number of 63,495 homeless individuals who slept in shelters, subtracting the 23,600 children who would presumably live with their parents were they to be housed, then paying $1000/month in rent for each family unit for 1 year.<p>
+    <div id="graph"></div>
+
+
+   <script src="landing.js"></script>
+   <script src="chooseBill.js"></script>
+   <script src="chooseVar.js"></script>
+   <script src="scale.js"></script>
+   
+   
+
+</body>
+
+</html>

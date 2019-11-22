@@ -13,13 +13,10 @@ var fulcrumWidth = 20
 var padding = 20
 var doubleArmLength = svgWidth / 2
 
-// ------------------------ these numbers are selection variables
-// they will eventually be fed in from sharvari's code, read from csv
-// can change these to constant numbers... 
 // jeff bezos' income 
 // versus feeding NYC homeless for 1 year
-var billionaireWorth = publicCurrentNetWorth
-var compareWorth = publicCurrentValueWorth
+var billionaireWorth = 131000000000
+var compareWorth = 478740000
 // --------------------------------//
 
 // initialize current angle to 0
@@ -40,7 +37,7 @@ var angleScale = d3.scaleLinear()
 // can change the numbers in this range to adjust small and large icon sizes
 var iconRadiusScale = d3.scaleLinear()
     .domain([0, billionaireWorth])
-    .range([10, 70]);
+    .range([5, 70]);
 
 var svg = d3.select("#graph").append("svg")
     .attr("width", svgWidth)
@@ -78,14 +75,14 @@ graphContainer.append("circle")
 // draw fulcrum of scale
 fulcrumLeft = graphContainer.append('line')
     .attr('x1', -fulcrumWidth / 2)
-    .attr('y1', doubleArmLength / 2 * Math.cos(Math.PI / 4))
+    .attr('y1', doubleArmLength / 2 * Math.cos(Math.PI / 4) + stemOffset)
     .attr('x2', -2)
     .attr('y2', 0)
     .attr('stroke-width', 4)
     .attr('stroke', "black")
 fulcrumRight = graphContainer.append('line')
     .attr('x1', fulcrumWidth / 2)
-    .attr('y1', doubleArmLength / 2 * Math.cos(Math.PI / 4))
+    .attr('y1', doubleArmLength / 2 * Math.cos(Math.PI / 4) + stemOffset)
     .attr('x2', 2)
     .attr('y2', 0)
     .attr('stroke-width', 4)
@@ -273,8 +270,8 @@ function pathTweenRight(path, startDeg, endDeg) {
         d3.selectAll(".compareIcon")
             .each(function (d, i) {
                 d3.select(this)
-                    .attr("cx", point.x + 2 * (i % 4) * iconRadiusScale(compareWorth) - plateWidth / 3)
-                    .attr("cy", point.y - 25 * Math.floor(i / 4) + stemOffset - doubleArmLength - plateHeight - stemHeight)
+                    .attr("cx", point.x + 2 * (i % 8) * iconRadiusScale(compareWorth) - plateWidth / 3)
+                    .attr("cy", point.y - 10 * Math.floor(i / 8) - doubleArmLength - stemHeight + iconRadiusScale(compareWorth) / 2 + 4)
             })
     }
 }
@@ -309,7 +306,7 @@ function makeIcons(weight, side, i) {
             }
             // put comparison icon on right side of screen
             // stack the icons
-            else { return 1.5 * doubleArmLength - plateWidth / 2 + i % 4 * 2 * (iconRadiusScale(2762628933)) }
+            else { return 1.5 * doubleArmLength - plateWidth / 2 + i % 8 * 2 * (iconRadiusScale(compareWorth)) }
         })
         // assign each icon an ID
         .attr("class", function () {
@@ -325,7 +322,7 @@ function makeIcons(weight, side, i) {
         })
         .attr("cy", function () {
             if (side == "R") {
-                return 15 * Math.floor(i / 4) + (iconRadiusScale(weight) + doubleArmLength - stemHeight - plateHeight - stemOffset)
+                return 15 * Math.floor(i / 8) + (iconRadiusScale(weight) + doubleArmLength - stemHeight - plateHeight - stemOffset)
                 //return doubleArmLength
             }
             else {
