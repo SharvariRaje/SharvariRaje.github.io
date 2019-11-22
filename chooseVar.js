@@ -13,11 +13,11 @@
                 .attr("width", w)
                 .attr("height", 300);
 
-            // var tooltip = d3.select("body")
-//                 .append("div")
-//                 .style("posiiton", "absolute")
-//                 .style("z-index", "0")
-//                 .attr("id", "tooltip")
+            var tooltip = d3.select("body")
+                .append("div")
+                .style("posiiton", "absolute")
+                .style("z-index", "0")
+                .attr("id", "tooltip")
 
 
             svg.selectAll("img")
