@@ -13,7 +13,7 @@
                 .attr("width", w)
                 .attr("height", 300);
 
-            var tooltip = d3.select("body")
+            var tooltip = d3.select("chooseVar")
                 .append("div")
                 .style("posiiton", "absolute")
                 .style("z-index", "0")
