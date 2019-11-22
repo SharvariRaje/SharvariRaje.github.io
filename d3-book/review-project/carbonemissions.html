@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Carbon Emissions Per Commodity</title>
+	<script type="text/javascript" src="../d3.js"></script>
+	<style type="text/css">
+		
+		rect:hover {
+			fill: gray;
+		}
+		
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			var w= 1200;
+			var h= 800;
+			var padding= 80;
+			
+			var dataset, xScale, yScale, xAxis, yAxis;
+			
+			
+			
+			
+			d3.csv("../carbonemissions.csv", rowConverter)
+			.then(funtion(d) {
+				dataset = data;
+				
+				
+			)};
+			
+			</script>
+			</body>
+			</html>

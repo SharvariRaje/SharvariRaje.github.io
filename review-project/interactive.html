@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>The Billionaire Complex</title>
+        <script src="d3.js"></script>
+        <style>
+            body{
+                font-family:arial;
+				font-size:32px;
+            }
+            .inputBoxes{
+                display:inline-block;
+                font-size:24px;
+                border:2px solid black;
+                border-radius:5px;
+                margin:20px;
+                padding:5px;
+                color:red;
+            }
+			
+			circle:hover {
+				fill: orange;
+			}
+			
+			#tooltip {
+				position: absolute;
+				width: 200px;
+				height: auto;
+				padding: 10px;
+				background-color: white;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+			
+			#tooltip.hidden {
+				display: none;
+			}
+			
+			#tooltip p {
+				margin: 0;
+				font-family: sans-serif;
+				font-size: 16px;
+				line-height: 20px;
+			}
+			
+        </style>
+	</head>
+	<body>  
+		
+		Jeff Bezos' annual income is <b>$78,500,000,000</b> <br>
+		Warren Buffet's annual income is <b>$4,000,000,000</b><br>
+		Bill Gates' annual income is <b>$3,710,000,000</b><br>
+		
+        <br><br>   
+        
+        How many years will you have to work to be a billionaire?
+		
+		<br><br>
+         
+        <form id="form" onsubmit="return false;">
+            Your Annual Income: <input  type="text" id="firstNumber" class="inputBoxes" />
+            <!--Billionaires Income: <input  type="text" id="secondNumber"class="inputBoxes"  /> -->        
+            <!--out check button-->
+            <input class="inputBoxes" type="submit" onclick="check();" />
+        </form>
+		
+        <select id="bill" onChange="setBillionaire(this.value)">
+               <option>78500000000</option>
+               <option>4000000000</option>
+               <option>3710000000</option>
+           </select>
+       
+		
+        <div id="output" style="position:absolute; top:500px; left:20px; width:700px; text-style:bold" >output</div>
+     
+        
+		<script type="text/javascript">
+			
+			var w = 200;
+			var h = 50;
+			var padding = 40;
+			
+			var dataset = [ 78500000000, 4000000000, 3710000000 ];
+			
+			var xScale = d3.scaleBand()
+							.domain(d3.range(dataset.length))
+							.rangeRound([0, w])
+			                .paddingInner(0.05);
+
+			var yScale = d3.scaleLinear()
+							.domain([0, d3.max(dataset)])
+							.range([0, h]);
+			
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+						
+		 			svg.selectAll("rect")
+		 			   .data(dataset)
+		 			   .enter()
+		 			   .append("rect")
+		 			   .attr("x", function(d, i) {
+		 			   		return xScale(i);
+		 			   })
+		 			   .attr("y", function(d) {
+		 			   		return h - yScale(d);
+		 			   })
+		 			   .attr("width", xScale.bandwidth())
+		 			   .attr("height", function(d) {
+		 			   		return yScale(d);
+		 			   })
+		 			   .attr("fill", function(d) {
+		 					return "rgb(0, 0, " + Math.round(d * 10) + ")";
+		 			   })
+					   .on("mouseover", function(d) {
+				   	
+					   var xPosition = parseFloat(d3.select(this).attr("cx"));
+					   var yPosition = parseFloat(d3.select(this).attr("cy")) + h/4.5;
+					   
+ 					   
+				   d3.select("#tooltip")
+				       .style("left", xPosition + "px")
+				       .style("top", yPosition +"px")
+				       .select("#value")
+				       .text(d);
+
+					   d3.select("#tooltip").classed("hidden", false);
+
+					 })
+
+					 .on("mouseout", function() {
+
+						 d3.select("#tooltip").classed("hidden", true);
+					 })
+						
+			var billionaire;
+			
+			function setBillionaire(value){
+				billionaire = value
+			}
+			var billionaires = [000]
+		            for(var b in billionaires){
+		            	console.log(billionaires[b])
+				d3.select("#bill").append("option").attr("value",billionaires[b]).html(billionaires[b])
+				
+            }
+			
+			var display = ""
+            //check if there are 2 numbers
+            function check() {
+                var input1 = document.getElementById("firstNumber").value;
+                var input2 = billionaire
+                //our validation cases
+                //either input cannot be empty
+                if(input1=="" || input2==""){
+                    d3.select("#output").html("There has to be 2 inputs")
+                }else if (isNaN(input1)!=true &&isNaN(input2)!=true){//both have to be numbers
+                    Euclid(input1,input2)
+                }
+                else{
+                    d3.select("#output").html("Inputs have to be numbers")
+                }
+                
+            }
+            
+            function Euclid(a,b){
+                console.log(a,b)
+				console.log(a/b)
+				
+				var times= Math.round(b/a*100) / 100
+				
+              
+                    d3.select("#output").html("Billionaire's income is " + times + " times yours")
+				
+
+            }
+            
+		</script>
+	</body>
+</html>

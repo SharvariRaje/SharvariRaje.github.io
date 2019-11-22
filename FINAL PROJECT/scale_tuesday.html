@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet"> -->
+    <meta charset="utf-8">
+    <title>tuesdayy</title>
+    <!-- <script type="text/javascript" src="../d3.js"></script> -->
+    <style>
+        #graph {
+            margin: auto;
+            width: 600px;
+            border: 3pm solid black;
+        }
+
+        #tooltip {
+				position: absolute;
+				width: auto;
+				height: auto;
+				padding: 10px;
+				background-color: white;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+			
+			#tooltip.hidden {
+				display: none;
+			}
+			
+			#tooltip p {
+				margin: 0;
+				font-family: sans-serif;
+				font-size: 16px;
+				line-height: 20px;
+			}
+
+    </style>
+</head>
+
+<body>
+    <div id="graph"></div>
+
+    <div id="tooltip" class="hidden">
+        <p><span id="value">100</span></p>
+    </div>
+
+    <!-- <script type="text/javascript">
+
+        var padding = 20
+        var w = 600
+        var h = 20
+        var xRect = 50 
+        var yRect = 300 + padding
+// programatically determine fulcrum height based on width of rect,
+// = rcos45, where r is radius, i.e. w/2
+// then subtract 1 pixel because it looks better
+        var fulcrumHeight = w/2 * (Math.cos(Math.PI / 4)) -1
+        // yWeights was from before the radius scaling
+        // var yWeights = 20 
+        var rectTargetAngle = 0
+        var  yClickHereToDropWeight = yRect + h -5 
+
+        //this number is the "choose your billionaire" variable being fed in
+        var billionaireWorth = 70300000000
+        // how to make this display in tooltip as something nicer, like "70.3 billion"
+        // should the CSV of billionaires & variables include multiple formats?
+        // could be imported as a CSV:
+        // with columns for Name, net worth digits (for comparisons, computations), net worth abbreviation
+        // then the "choose your billionaire" function would simply 
+        // select a column in that csv to pass in as variable
+
+        // thought:  would be cool to make variables scalable so that 
+        // as more weight is added, the counter programatically alter the text
+        // e.g. feed nyc SNAP recipients for 1 yr... 2 yrs... 3 yrs... 
+        // counts up as you drop the weights
+
+        var billiName = "MARK ZUCKERBERG"
+
+        //this number is the other variable to compare to, also fed in
+        var compareWorth = 2762628933
+        var compareName = "GDP OF LIBERIA"
+
+        // create an array of the 2 things to be compared.
+        var valuestocompare = [billionaireWorth, compareWorth]
+        var sortedCompare = valuestocompare.sort(function(a, b){return b - a});
+        // store values so we can reference bigger and smaller variable
+        var bigger = sortedCompare[0]
+        var smaller = sortedCompare[1]
+
+        // to make the comparison scalable, create scale with the bigger number as upper limit
+          var compareScale = d3.scaleLinear()
+                    .domain([0, bigger])
+                    .range([0, 45]);
+
+         var iconRadiusScale = d3.scaleLinear()
+                    .domain([0, bigger])
+                    .range([5, 70]);
+
+
+        var svg = d3.select("#graph").append("svg")
+            .attr("width", 1000)
+            .attr("height", 1000)
+            .attr("yRect", 50);
+
+        // draw the rectangle 
+        svg.append('rect')
+            .attr('x', xRect)
+            .attr('y', yRect)
+            .attr('width', w)
+            .attr('height', h)
+            .attr('fill', "white")
+            .attr("stroke-width", 2)
+            .attr('stroke', "black");
+
+        // draw center of scale
+        var center = svg.append('circle')
+            .attr("cx", w / 2 + xRect)
+            .attr("cy", yRect + h / 2)
+            .attr("fill", "black")
+            .attr("r", h / 2);
+
+        // draw the vertical center line
+        var balanceline = svg.append("line")
+            .attr("x1", 50 + w / 2)
+            .attr("y1", yRect + h)
+            .attr("x2", 50 + w / 2)
+            .attr("y2", yRect + h + fulcrumHeight)
+            .attr("stroke-width", 2)
+            .attr("stroke", "black");
+
+        //draw the "floor" line
+        var floor = svg.append("line")
+            .attr("x1", 50)
+            .attr("y1", yRect + h + fulcrumHeight)
+            .attr("x2", 50 + w)
+            .attr("y2", yRect + h + fulcrumHeight)
+            .attr("stroke-width", 2)
+            .attr("stroke", "black");
+
+       
+
+        // call the makeIcons function twice 
+        // specify sides "L" and "R" so billionaire is always on left side,
+        // and comparison variable always on right.
+        makeIcons(billionaireWorth, "L", billiName)
+        makeIcons(compareWorth, "R", compareName)
+
+
+
+
+        // define function to make icons
+        function makeIcons(weight, side, label) {
+            svg.append('circle')
+                .attr("cx", function () {
+                    // put billionaire icon on left side of screen
+                    if (side == "L") {
+                        return xRect + 5*padding + iconRadiusScale(weight) /2
+                    }
+                    // put comparison icon on right side of screen
+                    else { return xRect + w - 5*padding -  iconRadiusScale(weight) /2}
+                })
+                .attr("cy", iconRadiusScale(smaller) +100)
+                .attr("fill", "gold")
+                .attr("r", iconRadiusScale(weight))
+
+                // update tooltip position so that it moves with the 
+                // falling or rising icon
+                .on("mouseover",function(d,i){
+                       d3.select(this).attr("fill","red")
+                        var xPosition = parseFloat(d3.select(this).attr("cx")) + 10
+					    var yPosition = parseFloat(d3.select(this).attr("cy")) + 10
+						console.log(xPosition, yPosition, d3.select(this))
+
+                        d3.select("#tooltip")
+						.style("left", xPosition + "px")
+						.style("top", yPosition + "px")						
+						.select("#value")
+                        .text(label + ": $" + weight);
+                        d3.select("#tooltip").classed("hidden", false);
+                    })
+                .on("mouseout",function(d,i){
+                    d3.select(this).attr("fill","gold");
+                    d3.select("#tooltip").classed("hidden", true);
+                   })
+                .on("click", function () {
+                    d3.select(this)
+                    .transition()
+                    .duration(2000)
+                    // drop ball down to position of rect
+                    // need a way to keep the ball moving with the rect
+                    .attr("transform", "translate (0," + (yRect - (2* iconRadiusScale(weight))- padding) + ")");
+                    turnRect(compareScale(weight), side);      
+                }); 
+
+
+
+            // OOH CAN WE PUT THE TEXT ON TOP OF SVG SCALE ELEMENT 
+            // and also put it in same rotating code
+            // so that it looks like each customized variable name 
+            // is like engraved onto the scale!!!
+
+            svg.append("text")
+            .text(billiName)
+            .attr("font-family", "Open Sans Condensed")
+            .attr("x", xRect + 5)
+            .attr("y", yClickHereToDropWeight)
+
+
+            svg.append("text")
+            .text(compareName)
+            .attr("font-family", "Open Sans Condensed")
+            // how to always right align this text to scale border,
+            // regardless of length of text from variable name?
+            .attr("x", xRect + w -85)
+            .attr("y", yClickHereToDropWeight)
+
+
+
+           //     .attr("x", function () {
+          //          if (side == "L") {
+            //            return xRect + 20
+            //       }
+            //       else { return xRect + w -20 }
+            //    })
+           //     .attr("y", yWeights)
+
+        
+
+
+        // deleted labels and replaced with tooltip
+        // but this is a design decision
+        // make labels for weight buttons
+         //   svg.append("text")
+         //       .text(weight)
+         //       .attr("x", function () {
+         //            if (side == "L") {
+         //                return xRect + 20
+         //            }
+         //           else { return xRect + w -20 }
+         //       })
+         //       .attr("y", yWeights)
+           
+
+            function turnRect(angle, side) {
+                if (side == "L") {
+                    rectTargetAngle = rectTargetAngle - angle
+                }
+                else {
+                    rectTargetAngle = rectTargetAngle + angle
+                }
+                // new local variable (not used outside function)
+                let rectDisplayAngle = rectTargetAngle;
+                // make max rotation of 45 degrees, so it doesnt go through the "floor"
+                if (rectDisplayAngle > 45) rectDisplayAngle = 45
+                if (rectDisplayAngle < -45) rectDisplayAngle = -45
+                d3.select('rect')
+                    .transition()
+                // delay programatically to start turning when ball hits?
+                // make delay variable of time it would take for ball to translate down?
+                    .delay(500)
+                    .duration(5000)
+                    .attr("transform", "rotate(" + (rectDisplayAngle) + "," + (w / 2 + xRect) + "," + (yRect + h / 2) + ")")
+                return rectTargetAngle
+            }
+        };
+
+    </script> -->
+</body>
+
+</html>

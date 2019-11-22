@@ -1,0 +1,158 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+	<title>the billionaire complex</title>
+	<script src="d3.js"></script>
+	<style>
+		
+		img:hover {
+			fill: gold;
+		}
+		
+		#colorstrip{
+		    width: 100%; height: 2px;
+		    border-style: solid;
+		    border-color: white;
+		    background-color: darksalmon;
+		}
+		
+		#tooltip {
+			position: absolute;
+			width: 200px;
+			height: auto;
+			padding: 10px;
+			background-color: white;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			pointer-events: none;
+			/*border: 6px solid gold;*/
+		}
+		
+		#tooltip.hidden {
+			display: none;
+		}
+		
+		#tooltip p {
+			margin: 0;
+			font-family: sans-serif;
+			font-size: 16px;
+			line-height: 20px;
+		}
+		
+	</style>
+</head>
+<body>
+		
+	<span id="logo"><strong><font size = +18>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspJust how much is a B&nbspI&nbspL&nbspL&nbspI&nbspO&nbspN&nbsp?</font></strong></span>
+	<div id="colorstrip"></div>	
+	
+	<div id="button"><font size=5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspclick on circles to find out</font></div>
+	
+	<br><br><br>
+	
+	<script type="text/javascript">
+		
+		var w = 1600
+		var h = 850
+		var padding = 40
+		
+		d3.csv("landing_page.csv").then(function(data){
+				
+				dataset = data;
+				
+				var svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+				
+				svg.selectAll("circle")
+				.data(dataset)
+				.enter()
+				.append("circle")
+				.attr("cx", function(d,i){
+					return i%4*400+150
+				})
+				.attr("cy", function(d,i){
+					return Math.floor(i/4)*360+100
+				})
+				.attr("r", function(d) {
+					return d.dataValue
+				})
+				.attr("fill", "#008080")
+				// .scaleExtent([1/20])
+				.on("click", function() {
+					transformSize();
+				});
+				
+svg.selectAll("text")
+   .data(dataset)
+   .enter()
+   .append("text")
+   .text(function(d) {
+	   console.log(d["dataName"])
+   		return d["dataName"]
+   })
+   .attr("x", function(d,i){
+					return i%4*400+105
+				})
+   .attr("y", function(d,i){
+					return Math.floor(i/4)*360+280
+				})
+   .attr("font-family", "helvetica")
+   .attr("font-size", "14px")
+   .attr("fill", "black");
+   
+   
+svg.selectAll(".hf")
+   .data(dataset)
+   .enter()
+   .append("text")
+   .attr('class',"hf")
+   .text(function(d) {
+	   console.log(d["humanFriendly"])
+   		return d["humanFriendly"]
+   })
+   .attr("x", function(d,i){
+					return i%4*400+105
+				})
+   .attr("y", function(d,i){
+					return Math.floor(i/4)*360+300
+				})
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "18px")
+   .attr("fill", "gray");
+		});
+	
+		var transformSize = function() {
+			
+			d3.selectAll("circle")
+			.transition()
+			.duration(1000)
+			.attr("cx", function(d,i){
+					return i%4*400+150
+				})
+				.attr("cy", function(d,i){
+					return Math.floor(i/4)*360+100
+				})
+				.attr("r", function(d) {
+					return d.dataChange
+				})
+				.attr("fill", "#E9967A");
+				
+				d3.selectAll(".hf")
+				.transition()
+				.duration(1000)
+				.text(function(d) {
+	   console.log(d["humanFriendlychange"])
+   		return d["humanFriendlychange"]
+   })
+			};
+		
+		</script>
+	</body>
+	</html>

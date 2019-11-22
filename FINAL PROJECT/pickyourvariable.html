@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Pick Your Variable</title>
+	<script src="d3.js"></script>
+	<style>
+		
+		img:hover {
+			fill: gold;
+		}
+		
+		#colorstrip{
+		    width: 100%; height: 2px;
+		    border-style: solid;
+		    border-color: white;
+		    background-color: darksalmon;
+		}
+		
+		#tooltip {
+				position: absolute;
+				top:20px;
+				left:20px;
+				width: 200px;
+				height: auto;
+				padding: 10px;
+				background-color: white;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+		
+		#tooltip.hidden {
+			display: none;
+		}
+		
+		#tooltip p {
+			margin: 0;
+			font-family: sans-serif;
+			font-size: 16px;
+			line-height: 20px;
+		}
+		
+	</style>
+</head>
+<body>
+	
+	<span id="logo"><strong><font size = +18>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsppick your variable</font></strong></span>
+	<div id="colorstrip"></div>
+	
+	<script type="text/javascript">
+		
+		var w = 1650
+		var h = 900
+		var padding = 40
+		
+		d3.csv("var_data.csv").then(function(data){
+				
+				dataset = data;
+				
+				var svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+				
+				var tooltip = d3.select("body")
+				.append("div")
+				.style("posiiton", "absolute")
+				.style("z-index", "0")
+				//.style("visibility", "hidden")
+				.text("a simple tooltip")
+				.attr("id","tooltip")
+				
+				
+				svg.selectAll("img")
+				.data(dataset)
+				.enter()
+				.append("svg:image")
+				.attr("x", function(d,i){
+					return i%7*225+70
+				})
+				.attr("y", function(d,i){
+					return Math.floor(i/7)*225+70
+				})
+				.attr("width", 150)
+				.attr("height", 150)	
+				.attr("xlink:href", function(d) {
+					return d["images"].replace("real_variables","really_variables")
+					// console.log(d["images"])
+				}) 
+				.on("mouseover", function(d){
+					 tooltip.html(d["tooltipinfo"])
+					 tooltip.style("visibility", "visible")
+			        .style("left", (d3.event.pageX) + "px")     
+			        .style("top", (d3.event.pageY - 28) + "px");
+				})	
+				.on("mouseout", function(d){
+					return tooltip.style("visibility", "hidden");})  
+				.on("click", function(d){
+					console.log(d.amountNum)
+					var valueWorth = d.amountNum
+				})
+	
+svg.selectAll("text")
+   .data(dataset)
+   .enter()
+   .append("text")
+   .text(function(d) {
+	   console.log(d["variableName"])
+   		return d["variableName"]
+   })
+   .attr("x", function(d,i){
+					return i%10*225+120
+				})
+   .attr("y", function(d,i){
+					return Math.floor(i/10)*225+240
+				})
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "14px")
+   .attr("fill", "black");
+   
+   
+svg.selectAll(".hf")
+   .data(dataset)
+   .enter()
+   .append("text")
+   .attr('class',"hf")
+   .text(function(d) {
+	   console.log(d["humanFriendly"])
+   		return d["humanFriendly"]
+   })
+   .attr("x", function(d,i){
+					return i%10*225+125
+				})
+   .attr("y", function(d,i){
+					return Math.floor(i/10)*225+260
+				})
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "11px")
+   .attr("fill", "gray");
+		});
+		</script>
+	</body>
+	</html>
