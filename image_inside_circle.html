@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<script>
+		var svg = d3.select("body").append("svg")
+		    		.attr("width", 500)
+						.attr("height", 500);
+
+           var data = [{
+              posx: 100,
+              posy: 100,
+              img: "https://cdn0.iconfinder.com/data/icons/flat-round-system/512/android-128.png",
+            }, {
+              posx: 200,
+              posy: 200,
+
+              img: "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png"
+            }, {
+              posx: 300,
+              posy: 300,
+              img: "https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-128.png"
+            }]
+            
+            var size =30
+            var defs = svg.append('svg:defs');
+            
+            data.forEach(function(d, i) {
+                
+              defs.append("svg:pattern")
+                .attr("id", "img" + i)
+                .attr("width", size) 
+                .attr("height", size)
+                .attr("patternUnits", "userSpaceOnUse")
+                .append("svg:image")
+                .attr("xlink:href", d.img)
+                .attr("width", size)
+                .attr("height", size)
+                .attr("x", 0)
+                .attr("y", 0);
+                
+              var circle = svg.append("circle")
+                .attr("transform", "translate(" + d.posx + "," + d.posy + ")")
+                .attr("cx", size / 2)
+                .attr("cy", size / 2)
+                .attr("r", size / 2)
+                .style("fill", "url(#img" + i + ")");
+
+            })
+            
+	</script>
+</body>
+</html>

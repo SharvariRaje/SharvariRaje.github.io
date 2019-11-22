@@ -1,0 +1,8 @@
+variableName,amountNum,humanFriendly,images,tooltipinfo
+American Family,81200,"$ 81,200",real_variables/american_family_real.png,Median net worth of an American family
+White American Family,134230,"$ 134,230",real_variables/american_family.png,Median net worth of a white American family
+Black American Family,11030,"$ 11,030",real_variables/black_family.png,Median net worth of a black American family
+School Teacher,58536,"$ 58,536",real_variables/school_teacher.png,Median income of a school teacher
+Liberia,2762628933,$ 2.7 billion,real_variables/liberia_map.png,GDP of Liberia
+Groceries,4284,"$ 4,284",real_variables/groceries.png,Average annual household spend on groceries in NYC
+Empire State Building,40948900,$ 40 million,real_variables/empire_state.png,Cost to build the empire state building
