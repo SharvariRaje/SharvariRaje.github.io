@@ -17,7 +17,7 @@
             .append("div")
             .attr("id","tooltip")
             .style("posiiton", "absolute")
-            .style("z-index", "0")
+            // .style("z-index", "0")
             
             svg.selectAll("img")
             .data(dataset)
