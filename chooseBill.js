@@ -13,7 +13,7 @@
             .attr("width", w)
             .attr("height", h);
             
-            var tooltip = d3.select("#chooseBilli")
+            var tooltip = d3.select("body")
             .append("div")
             .attr("id","tooltip")
             .style("posiiton", "absolute")
