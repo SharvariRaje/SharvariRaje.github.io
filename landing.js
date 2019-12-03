@@ -122,8 +122,6 @@ var landingData;
 				.each(function(d,i){
 				if(d!=undefined){
 					d3.select(this)
-					.transition()
-					.duration(1000)
 					.attr("cx", function(d,i){
 						return i%4*400+200
 					})
