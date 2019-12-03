@@ -11,7 +11,7 @@ var landingData;
 				.attr("width", w)
 				.attr("height", h);
 				
-				svg.selectAll("ci")
+				svg.selectAll(".ci")
 				.data(dataset)
 				.enter()
 				.append("circle")
