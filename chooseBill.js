@@ -16,7 +16,7 @@
             var tooltip = d3.select("body")
             .append("div")
             .attr("id","tooltip")
-            .style("posiiton", "absolute")
+            //.style("posiiton", "absolute")
             // .style("z-index", "0")
             
             svg.selectAll("img")
