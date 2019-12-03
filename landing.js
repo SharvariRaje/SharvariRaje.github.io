@@ -30,22 +30,6 @@ var landingData;
 					transformSize();
 				});
 				
-				svg.selectAll("circle")
-				.data(landingData)
-				.enter()
-				.append("circle")
-				.attr("cx", function(d,i){
-					return i%4*400+200
-				})
-				.attr("cy", function(d,i){
-					return Math.floor(i/4)*360+100
-				})
-				.attr("r", function(d) {
-					return d.dataValue
-				})
-				.attr("fill", "#008B8B")
-				});
-				
 				svg.selectAll("text")
 				   .data(landingData)
 				   .enter()
