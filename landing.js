@@ -27,8 +27,8 @@ var landingData;
 				.attr("fill", "#008080")
 				// .scaleExtent([1/20])
 				.on("click", function() {
-					transformSize()
-					circleRemain();
+					transformSize()					//
+					// circleRemain();
 				});
 				
 				// svg.selectAll("circle.back")
@@ -116,24 +116,24 @@ var landingData;
 				}
 			})
 			
-			var circleRemain = function() {
-				
-				d3.selectAll("circle")
-				.each(function(d,i){
-				if(d!=undefined){
-					d3.select(this)
-					.attr("cx", function(d,i){
-						return i%4*400+200
-					})
-					.attr("cy", function(d,i){
-						return Math.floor(i/4)*360+100
-					})
-					.attr("r", function(d) {
-						return d.dataBack
-					})
-					.attr("fill", "#008080")
-						})
-					   })
-			}
+			// var circleRemain = function() {
+//
+// 				d3.selectAll("circle")
+// 				.each(function(d,i){
+// 				if(d!=undefined){
+// 					d3.select(this)
+// 					.attr("cx", function(d,i){
+// 						return i%4*400+200
+// 					})
+// 					.attr("cy", function(d,i){
+// 						return Math.floor(i/4)*360+100
+// 					})
+// 					.attr("r", function(d) {
+// 						return d.dataBack
+// 					})
+// 					.attr("fill", "#008080")
+// 						})
+// 					   })
+// 			}
 			
 };
