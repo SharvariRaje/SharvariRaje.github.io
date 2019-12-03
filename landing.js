@@ -30,21 +30,21 @@ var landingData;
 					transformSize();
 				});
 				
-				svg.selectAll("circle.back")
-				.data(landingData)
-				.enter()
-				.append("circle")
-				.attr("cx", function(d,i){
-					return i%4*400+200
-				})
-				.attr("cy", function(d,i){
-					return Math.floor(i/4)*360+100
-				})
-				.attr("r", function(d) {
-					return d.dataBack
-				})
-				.attr("fill", "#008080")
-				});
+				// svg.selectAll("circle.back")
+// 				.data(landingData)
+// 				.enter()
+// 				.append("circle")
+// 				.attr("cx", function(d,i){
+// 					return i%4*400+200
+// 				})
+// 				.attr("cy", function(d,i){
+// 					return Math.floor(i/4)*360+100
+// 				})
+// 				.attr("r", function(d) {
+// 					return d.dataBack
+// 				})
+// 				.attr("fill", "#008080")
+// 				});
 				
 				svg.selectAll("text")
 				   .data(landingData)
