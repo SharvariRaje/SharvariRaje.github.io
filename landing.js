@@ -41,7 +41,7 @@ var landingData;
 					return Math.floor(i/4)*360+100
 				})
 				.attr("r", function(d) {
-					return d.dataValue
+					return d.dataBack
 				})
 				.attr("fill", "#008080")
 				});
