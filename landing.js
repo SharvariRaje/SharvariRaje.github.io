@@ -24,7 +24,7 @@ var landingData;
 				.attr("r", function(d) {
 					return d.dataValue
 				})
-				.attr("fill", "#004d4d")
+				.attr("fill", "#008080")
 				// .scaleExtent([1/20])
 				.on("click", function() {
 					transformSize();
