@@ -15,8 +15,8 @@
 
             var tooltip = d3.select("body")
                 .append("div")
-                .style("posiiton", "absolute")
-                .style("z-index", "0")
+                //.style("posiiton", "absolute")
+                //.style("z-index", "0")
                 .attr("id", "tooltip")
 
 
