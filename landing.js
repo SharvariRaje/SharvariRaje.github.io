@@ -30,7 +30,7 @@ var landingData;
 					transformSize();
 				});
 				
-				svg.selectAll("backCircle")
+				svg.selectAll("circle.back")
 				.data(landingData)
 				.enter()
 				.append("circle")
